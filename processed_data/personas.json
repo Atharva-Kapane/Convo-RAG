@@ -1,0 +1,738 @@
+[
+  {
+    "conv_id": 1,
+    "persona": {
+      "user1": {
+        "habits": [],
+        "personal_facts": [
+          "moving to Portland, Oregon",
+          "pursuing culinary dreams"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      },
+      "user2": {
+        "habits": [],
+        "personal_facts": [
+          "originally from Portland",
+          "moved away a few years ago",
+          "visit family there often",
+          "favorite place is Powell's Books"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 2,
+    "persona": {
+      "user1": {
+        "habits": [
+          "trying to try yoga but never had time"
+        ],
+        "personal_facts": [
+          "fulltime student studying radiology at a local college",
+          "plays in a band that parents don't know about",
+          "loves classic cars"
+        ],
+        "personality_traits": [
+          "values freedom to learn"
+        ],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "short",
+          "style": "casual"
+        }
+      },
+      "user2": {
+        "habits": [
+          "likes to run",
+          "does yoga"
+        ],
+        "personal_facts": [
+          "owns a 1964 Impala in need of new paint job",
+          "big fan of punk music"
+        ],
+        "personality_traits": [
+          "enthusiastic about hobbies",
+          "practical about projects"
+        ],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "short",
+          "style": "casual"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 3,
+    "persona": {
+      "user1": {
+        "habits": [
+          "cooking"
+        ],
+        "personal_facts": [
+          "has a dog and a cat"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "moderate",
+          "style": "casual"
+        }
+      },
+      "user2": {
+        "habits": [
+          "reading",
+          "cooking",
+          "spending time with family"
+        ],
+        "personal_facts": [
+          "had a dog that passed away"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "short",
+          "style": "casual"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 4,
+    "persona": {
+      "user1": {
+        "habits": [],
+        "personal_facts": [
+          "children's librarian",
+          "reads to kids"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      },
+      "user2": {
+        "habits": [],
+        "personal_facts": [
+          "loves reading"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 5,
+    "persona": {
+      "user1": {
+        "habits": [
+          "play soccer",
+          "play piano before starting my day"
+        ],
+        "personal_facts": [],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      },
+      "user2": {
+        "habits": [
+          "sing karaoke",
+          "into archery"
+        ],
+        "personal_facts": [
+          "firefighter",
+          "moving across the country"
+        ],
+        "personality_traits": [
+          "positive"
+        ],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 6,
+    "persona": {
+      "user1": {
+        "habits": [
+          "takes kids to the park and plays soccer with them"
+        ],
+        "personal_facts": [
+          "single parent",
+          "has a great support system"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "supportive",
+          "length": "medium",
+          "style": "conversational"
+        }
+      },
+      "user2": {
+        "habits": [],
+        "personal_facts": [
+          "single mom",
+          "works full time"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "empathetic",
+          "length": "medium",
+          "style": "conversational"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 7,
+    "persona": {
+      "user1": {
+        "habits": [
+          "trying new foods",
+          "watch funny and lighthearted shows",
+          "gardening"
+        ],
+        "personal_facts": [
+          "software engineer",
+          "barista"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      },
+      "user2": {
+        "habits": [
+          "trying local food",
+          "attending metal show for birthday",
+          "wearing more colors",
+          "gardening",
+          "listening to the Beatles",
+          "spending time with pets"
+        ],
+        "personal_facts": [
+          "nurse",
+          "single",
+          "lives with three cats"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 8,
+    "persona": {
+      "user1": {
+        "habits": [
+          "listening to music",
+          "watching movies",
+          "reading"
+        ],
+        "personal_facts": [],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      },
+      "user2": {
+        "habits": [],
+        "personal_facts": [
+          "has a lot of different kinds of plants, including flowers, vegetables, and herbs"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 9,
+    "persona": {
+      "user1": {
+        "habits": [
+          "taking care of dog",
+          "cooking (lasagna)"
+        ],
+        "personal_facts": [
+          "studying computer science",
+          "aiming to become a programmer",
+          "stay-at-home mom"
+        ],
+        "personality_traits": [
+          "supportive",
+          "positive"
+        ],
+        "communication_style": {
+          "tone": "positive",
+          "length": "short",
+          "style": "conversational"
+        }
+      },
+      "user2": {
+        "habits": [
+          "owning a gym",
+          "training people for peak physical condition"
+        ],
+        "personal_facts": [
+          "has a son",
+          "works full time",
+          "former computer programmer",
+          "owns a gym",
+          "loves historical fiction and fantasy books",
+          "not a good cook but loves lasagna"
+        ],
+        "personality_traits": [
+          "supportive",
+          "friendly"
+        ],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "short",
+          "style": "conversational"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 10,
+    "persona": {
+      "user1": {
+        "habits": [
+          "goes on hikes with family"
+        ],
+        "personal_facts": [
+          "has a cat and a dog",
+          "lives in a beautiful area with lots of hiking trails nearby"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "enthusiastic",
+          "length": "short",
+          "style": "friendly and conversational"
+        }
+      },
+      "user2": {
+        "habits": [
+          "fishing",
+          "spending time with dog"
+        ],
+        "personal_facts": [
+          "is a fisherman",
+          "lives in a city",
+          "no hiking trails nearby"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "enthusiastic",
+          "length": "short",
+          "style": "friendly and conversational"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 11,
+    "persona": {
+      "user1": {
+        "habits": [
+          "I love to dance salsa"
+        ],
+        "personal_facts": [
+          "My cat's name is Mittens",
+          "My dog's name is Buddy",
+          "I've never been fishing before"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      },
+      "user2": {
+        "habits": [],
+        "personal_facts": [
+          "I love being out on the water and the peace and quiet",
+          "I mostly do nature photography, but I'm also trying to get into sports photography",
+          "I finished a photoshoot with my dad"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 12,
+    "persona": {
+      "user1": {
+        "habits": [],
+        "personal_facts": [],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      },
+      "user2": {
+        "habits": [
+          "doing [hobby] since a kid"
+        ],
+        "personal_facts": [
+          "dad is a good photographer",
+          "dad taught [user2] everything he knows",
+          "planning to study photography in college"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "short",
+          "style": "supportive"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 13,
+    "persona": {
+      "user1": {
+        "habits": [
+          "dancing with kids"
+        ],
+        "personal_facts": [
+          "enjoys reading Jane Austen novels"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "short",
+          "style": "conversational"
+        }
+      },
+      "user2": {
+        "habits": [
+          "dancing",
+          "cleaning houses for extra money",
+          "staying in touch with family"
+        ],
+        "personal_facts": [
+          "has not read Jane Austen novels"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "short",
+          "style": "conversational"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 14,
+    "persona": {
+      "user1": {
+        "habits": [
+          "sang in choir"
+        ],
+        "personal_facts": [
+          "has children",
+          "busy with kids"
+        ],
+        "personality_traits": [
+          "supportive",
+          "encouraging"
+        ],
+        "communication_style": {
+          "tone": "positive",
+          "length": "medium",
+          "style": "supportive"
+        }
+      },
+      "user2": {
+        "habits": [
+          "practices music for choir",
+          "sings"
+        ],
+        "personal_facts": [
+          "sings since childhood",
+          "not close with family",
+          "trying to build stronger relationships with friends"
+        ],
+        "personality_traits": [
+          "friendly",
+          "repetitive",
+          "open to advice"
+        ],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "medium",
+          "style": "casual"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 15,
+    "persona": {
+      "user1": {
+        "habits": [],
+        "personal_facts": [
+          "not very artistic",
+          "can appreciate all the work that goes into creating a mural",
+          "likes sharks",
+          "has always wanted to go to the Georgia Aquarium"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      },
+      "user2": {
+        "habits": [],
+        "personal_facts": [
+          "muralist",
+          "creates murals for businesses and individuals",
+          "favorite animal is sharks",
+          "most challenging part of job is coming up with the concept for the mural"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "",
+          "length": "",
+          "style": ""
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 16,
+    "persona": {
+      "user1": {
+        "habits": [],
+        "personal_facts": [
+          "has a brother and a sister",
+          "works as a teacher"
+        ],
+        "personality_traits": [
+          "close with family"
+        ],
+        "communication_style": {
+          "tone": "positive",
+          "length": "short sentences",
+          "style": "friendly and enthusiastic"
+        }
+      },
+      "user2": {
+        "habits": [
+          "working on improving family relationships"
+        ],
+        "personal_facts": [
+          "aspires to be a teacher"
+        ],
+        "personality_traits": [
+          "supportive"
+        ],
+        "communication_style": {
+          "tone": "supportive",
+          "length": "moderate",
+          "style": "conversational"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 17,
+    "persona": {
+      "user1": {
+        "habits": [],
+        "personal_facts": [
+          "works as an online tutor",
+          "has always wanted to learn how to weld"
+        ],
+        "personality_traits": [
+          "enjoys helping people learn and grow",
+          "values flexibility"
+        ],
+        "communication_style": {
+          "tone": "positive",
+          "length": "medium",
+          "style": "supportive"
+        }
+      },
+      "user2": {
+        "habits": [
+          "goes fishing with his uncle",
+          "watches YouTube videos about welding"
+        ],
+        "personal_facts": [
+          "is an EMT",
+          "has rescued people caught in riptides"
+        ],
+        "personality_traits": [
+          "loves helping people",
+          "appreciates encouragement"
+        ],
+        "communication_style": {
+          "tone": "positive",
+          "length": "medium",
+          "style": "supportive"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 18,
+    "persona": {
+      "user1": {
+        "habits": [
+          "juggling balls",
+          "juggling torches and knives",
+          "trying hummus and pita bread"
+        ],
+        "personal_facts": [
+          "circus juggler from the midwest",
+          "terrible at spelling",
+          "loves the adrenaline rush of juggling"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "short",
+          "style": "conversational"
+        }
+      },
+      "user2": {
+        "habits": [
+          "enjoys hummus and pita bread"
+        ],
+        "personal_facts": [
+          "writer looking for a job",
+          "terrible at juggling",
+          "loves the combination of the creamy hummus and the crunchy pita bread"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "polite",
+          "length": "medium",
+          "style": "conversational"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 19,
+    "persona": {
+      "user1": {
+        "habits": [],
+        "personal_facts": [
+          "has a day off today",
+          "not working tomorrow"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "positive",
+          "length": "short",
+          "style": "friendly"
+        }
+      },
+      "user2": {
+        "habits": [],
+        "personal_facts": [
+          "is a personal trainer",
+          "has clients to train"
+        ],
+        "personality_traits": [],
+        "communication_style": {
+          "tone": "supportive",
+          "length": "medium",
+          "style": "friendly"
+        }
+      }
+    }
+  },
+  {
+    "conv_id": 20,
+    "persona": {
+      "user1": {
+        "habits": [
+          "walking dog",
+          "taking dog to park"
+        ],
+        "personal_facts": [
+          "has a mini Australian Shepherd"
+        ],
+        "personality_traits": [
+          "loves dogs",
+          "enthusiastic"
+        ],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "medium",
+          "style": "conversational"
+        }
+      },
+      "user2": {
+        "habits": [
+          "walking dog"
+        ],
+        "personal_facts": [
+          "loves Australian Shepherds",
+          "loves scuba diving",
+          "has a dog"
+        ],
+        "personality_traits": [
+          "loves dogs",
+          "friendly"
+        ],
+        "communication_style": {
+          "tone": "friendly",
+          "length": "medium",
+          "style": "conversational"
+        }
+      }
+    }
+  }
+]
