@@ -8,7 +8,7 @@ from preprocessing.embedder import Embedder
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 CHUNKS_PATH = os.path.join(BASE_DIR, "processed_data", "chunks.json")
-TOPICS_PATH = os.path.join(BASE_DIR, "processed_data", "topics.json")
+TOPICS_PATH = os.path.join(BASE_DIR, "processed_data", "topics_with_conv.json")
 
 CHUNK_INDEX_PATH = os.path.join(BASE_DIR, "processed_data", "chunks.index")
 TOPIC_INDEX_PATH = os.path.join(BASE_DIR, "processed_data", "topics.index")

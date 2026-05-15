@@ -5,16 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ConvoRAG — Conversation AI</title>
 
-  <!-- Google Fonts: Playfair Display (header) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- ═══════════════════════════════════════════
-       STYLES
-  ═══════════════════════════════════════════ -->
   <style>
-    /* ─── CSS Variables ─── */
+    /* ═══════════════════════════════════════════
+       CSS VARIABLES  (unchanged from original)
+    ═══════════════════════════════════════════ */
     :root {
       --bg-deep:        #080c18;
       --bg-mid:         #0d1225;
@@ -40,6 +38,8 @@
       --shadow-soft:    0 8px 32px rgba(0, 0, 0, 0.45);
       --shadow-glow:    0 0 40px rgba(232, 168, 124, 0.12);
       --transition:     0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
+      --panel-w: 260px;
     }
 
     /* ─── Reset & Base ─── */
@@ -83,7 +83,6 @@
       100% { opacity: 1; }
     }
 
-    /* Subtle noise grain overlay */
     body::after {
       content: '';
       position: fixed;
@@ -95,45 +94,40 @@
       background-size: 180px 180px;
     }
 
-    /* ─── Layout Wrappers ─── */
-    #app {
+    /* ═══════════════════════════════════════════
+       SHELL — top-level full-viewport column
+    ═══════════════════════════════════════════ */
+    #shell {
       position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
       height: 100dvh;
       width: 100%;
-      max-width: 1100px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 16px;
     }
 
     /* ═══════════════════════════════════════════
-       HEADER
+       HEADER  (unchanged)
     ═══════════════════════════════════════════ */
     header {
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 10px 16px;
+      padding: 20px 4px 16px;
       border-bottom: 1px solid var(--glass-border);
     }
 
-    .header-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .header-brand { display: flex; align-items: center; gap: 12px; }
 
     .brand-mark {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       border-radius: 10px;
       background: linear-gradient(135deg, var(--user-bubble-a), var(--user-bubble-b));
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 16px;
       box-shadow: 0 4px 16px rgba(224, 122, 95, 0.4);
       flex-shrink: 0;
@@ -141,9 +135,7 @@
 
     .brand-title {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: -0.3px;
+      font-size: 22px; font-weight: 600; letter-spacing: -0.3px;
       background: linear-gradient(120deg, var(--text-primary) 60%, var(--accent-gold));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -151,26 +143,18 @@
     }
 
     .brand-subtitle {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--text-muted);
     }
 
     .header-status {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--text-secondary); font-weight: 500;
     }
 
     .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: #5cb88a;
       box-shadow: 0 0 8px rgba(92, 184, 138, 0.6);
       animation: pulse 2.5s ease-in-out infinite;
@@ -182,25 +166,185 @@
     }
 
     /* ═══════════════════════════════════════════
-       CHAT CONTAINER
+       THREE-COLUMN BODY ROW
     ═══════════════════════════════════════════ */
+    #body-row {
+      flex: 1;
+      display: flex;
+      gap: 14px;
+      overflow: hidden;
+      padding: 16px 0 0;
+    }
+
+    /* ═══════════════════════════════════════════
+       SIDE PANELS — shared glass card styles
+    ═══════════════════════════════════════════ */
+    .side-panel {
+      width: var(--panel-w);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+      padding-bottom: 16px;
+    }
+
+    .side-panel::-webkit-scrollbar { width: 3px; }
+    .side-panel::-webkit-scrollbar-track { background: transparent; }
+    .side-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    /* Glass card wrapper */
+    .panel-card {
+      background: rgba(255, 255, 255, 0.038);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 18px 16px;
+      backdrop-filter: blur(var(--glass-blur));
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .panel-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 600;
+      color: var(--text-primary);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .panel-title-icon {
+      width: 26px; height: 26px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, var(--user-bubble-a), var(--user-bubble-b));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(224, 122, 95, 0.35);
+    }
+
+    .panel-helper {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-top: -4px;
+    }
+
+    .panel-field { display: flex; flex-direction: column; gap: 5px; }
+
+    .panel-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .panel-input,
+    .panel-select,
+    .panel-textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 9px;
+      padding: 8px 11px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .panel-input:focus,
+    .panel-select:focus,
+    .panel-textarea:focus {
+      border-color: rgba(232, 168, 124, 0.4);
+      box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.08);
+    }
+
+    .panel-input::placeholder,
+    .panel-textarea::placeholder { color: var(--text-muted); }
+
+    /* Remove number spinners */
+    .panel-input[type="number"]::-webkit-inner-spin-button,
+    .panel-input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .panel-input[type="number"] { -moz-appearance: textfield; }
+
+    .panel-select option { background: #0d1225; color: var(--text-primary); }
+
+    .panel-textarea {
+      resize: vertical;
+      min-height: 76px;
+      max-height: 150px;
+      line-height: 1.5;
+    }
+
+    .panel-warning {
+      font-size: 11px;
+      color: var(--accent-amber);
+      opacity: 0.78;
+      line-height: 1.45;
+    }
+
+    /* Panel action button — matches existing send-btn aesthetic */
+    .panel-btn {
+      width: 100%;
+      padding: 9px 14px;
+      border: none; border-radius: 10px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, var(--user-bubble-a), var(--user-bubble-b));
+      box-shadow: 0 4px 14px rgba(224, 122, 95, 0.35);
+      transition: var(--transition);
+      transition-property: transform, box-shadow, opacity;
+    }
+
+    .panel-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(224, 122, 95, 0.5);
+    }
+
+    .panel-btn:active:not(:disabled) { transform: translateY(0) scale(0.98); }
+
+    .panel-btn:disabled {
+      opacity: 0.4; cursor: default; box-shadow: none;
+    }
+
+    /* Inline panel error */
+    .panel-error {
+      display: none;
+      font-size: 12px; color: #f08080;
+      background: rgba(220, 80, 80, 0.1);
+      border: 1px solid rgba(220, 80, 80, 0.2);
+      border-radius: 8px;
+      padding: 7px 10px;
+      line-height: 1.45;
+      animation: fadeUp 0.25s ease both;
+    }
+
+    /* ═══════════════════════════════════════════
+       CENTER CHAT COLUMN
+    ═══════════════════════════════════════════ */
+    #chat-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    /* ─── Chat Window ─── */
     #chat-window {
       flex: 1;
       overflow-y: auto;
-      padding: 24px 0 12px;
+      padding: 8px 0 12px;
       display: flex;
       flex-direction: column;
       gap: 16px;
       scroll-behavior: smooth;
     }
 
-    /* Custom scrollbar */
     #chat-window::-webkit-scrollbar { width: 4px; }
     #chat-window::-webkit-scrollbar-track { background: transparent; }
-    #chat-window::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.12);
-      border-radius: 4px;
-    }
+    #chat-window::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
     #chat-window::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
 
     /* ─── Empty State ─── */
@@ -217,13 +361,9 @@
     }
 
     .empty-orb {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
+      width: 72px; height: 72px; border-radius: 50%;
       background: linear-gradient(135deg, var(--user-bubble-a), var(--user-bubble-b));
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 30px;
       box-shadow:
         0 0 0 12px rgba(224, 122, 95, 0.08),
@@ -239,48 +379,16 @@
 
     #empty-state h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      font-weight: 600;
-      color: var(--text-primary);
-      line-height: 1.3;
+      font-size: 24px; font-weight: 600;
+      color: var(--text-primary); line-height: 1.3;
     }
 
     #empty-state p {
-      font-size: 14px;
-      color: var(--text-secondary);
-      max-width: 300px;
-      line-height: 1.6;
+      font-size: 14px; color: var(--text-secondary);
+      max-width: 300px; line-height: 1.6;
     }
 
-    .suggestion-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 8px;
-    }
-
-    .chip {
-      padding: 8px 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: 999px;
-      font-size: 13px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      backdrop-filter: blur(var(--glass-blur));
-      transition: var(--transition);
-      transition-property: background, border-color, color, transform;
-    }
-
-    .chip:hover {
-      background: rgba(232, 168, 124, 0.1);
-      border-color: rgba(232, 168, 124, 0.3);
-      color: var(--accent-gold);
-      transform: translateY(-1px);
-    }
-
-    /* ─── Message Rows ─── */
+    /* ─── Message Rows (unchanged) ─── */
     .message-row {
       display: flex;
       align-items: flex-end;
@@ -293,18 +401,12 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .message-row.user  { flex-direction: row-reverse; }
-    .message-row.bot   { flex-direction: row; }
+    .message-row.user { flex-direction: row-reverse; }
+    .message-row.bot  { flex-direction: row; }
 
-    /* Avatar */
     .avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
       font-size: 13px;
     }
 
@@ -319,16 +421,13 @@
       backdrop-filter: blur(var(--glass-blur));
     }
 
-    /* Bubble */
     .bubble {
-      max-width: min(75%, 800px);
+      max-width: min(75%, 560px);
       padding: 12px 16px;
       border-radius: var(--radius-bubble);
-      font-size: 14.5px;
-      line-height: 1.65;
-      font-weight: 400;
-      word-break: break-word;
-      position: relative;
+      font-size: 14px; line-height: 1.65;
+      font-weight: 400; word-break: break-word;
+      white-space: pre-wrap;  /* preserves newlines in formatted bot output */
     }
 
     .message-row.user .bubble {
@@ -347,37 +446,27 @@
       box-shadow: var(--shadow-soft);
     }
 
-    /* Timestamp */
     .timestamp {
-      font-size: 10px;
-      color: var(--text-muted);
-      margin-top: 5px;
-      text-align: right;
-      padding: 0 4px;
+      font-size: 10px; color: var(--text-muted);
+      margin-top: 5px; padding: 0 4px;
     }
 
-    .message-row.bot .timestamp { text-align: left; }
-
-    .bubble-wrap {
-      display: flex;
-      flex-direction: column;
-    }
-
+    .bubble-wrap { display: flex; flex-direction: column; }
     .message-row.user .bubble-wrap { align-items: flex-end; }
     .message-row.bot  .bubble-wrap { align-items: flex-start; }
+    .message-row.user .timestamp   { text-align: right; }
+    .message-row.bot  .timestamp   { text-align: left; }
 
-    /* ─── Typing Indicator ─── */
+    /* ─── Typing Indicator (unchanged) ─── */
     #typing-row {
-      display: none; /* shown via JS */
+      display: none;
       align-items: flex-end;
       gap: 10px;
       animation: fadeUp 0.3s ease both;
     }
 
     .typing-bubble {
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      display: flex; align-items: center; gap: 5px;
       padding: 14px 18px;
       background: var(--bot-bubble);
       border: 1px solid var(--glass-border);
@@ -387,33 +476,23 @@
     }
 
     .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+      width: 6px; height: 6px; border-radius: 50%;
       background: var(--text-secondary);
       animation: dotBounce 1.3s ease-in-out infinite;
     }
-
     .dot:nth-child(2) { animation-delay: 0.18s; }
     .dot:nth-child(3) { animation-delay: 0.36s; }
 
     @keyframes dotBounce {
       0%, 60%, 100% { transform: translateY(0);   opacity: 0.5; }
-      30%            { transform: translateY(-7px); opacity: 1;   }
+      30%            { transform: translateY(-7px); opacity: 1; }
     }
 
-    /* ═══════════════════════════════════════════
-       INPUT AREA
-    ═══════════════════════════════════════════ */
-    #input-area {
-      flex-shrink: 0;
-      padding: 14px 0 20px;
-    }
+    /* ─── Input Area (unchanged) ─── */
+    #input-area { flex-shrink: 0; padding: 14px 0 0; }
 
     .input-glass {
-      display: flex;
-      align-items: flex-end;
-      gap: 10px;
+      display: flex; align-items: flex-end; gap: 10px;
       background: rgba(255, 255, 255, 0.055);
       border: 1px solid var(--glass-border);
       border-radius: 16px;
@@ -429,110 +508,90 @@
     }
 
     #user-input {
-      flex: 1;
-      background: none;
-      border: none;
-      outline: none;
+      flex: 1; background: none; border: none; outline: none;
       font-family: 'DM Sans', sans-serif;
-      font-size: 14.5px;
-      font-weight: 400;
+      font-size: 14.5px; font-weight: 400;
       color: var(--text-primary);
-      resize: none;
-      max-height: 140px;
-      line-height: 1.55;
-      padding: 4px 0;
+      resize: none; max-height: 140px;
+      line-height: 1.55; padding: 4px 0;
       caret-color: var(--accent-gold);
     }
-
     #user-input::placeholder { color: var(--text-muted); }
 
     #send-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 11px;
-      border: none;
-      cursor: pointer;
+      width: 40px; height: 40px;
+      border-radius: 11px; border: none; cursor: pointer;
       background: linear-gradient(135deg, var(--user-bubble-a), var(--user-bubble-b));
       color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       transition: var(--transition);
-      transition-property: transform, box-shadow, opacity, background;
+      transition-property: transform, box-shadow, opacity;
       box-shadow: 0 4px 16px rgba(224, 122, 95, 0.4);
     }
-
-    #send-btn:hover:not(:disabled) {
-      transform: translateY(-1px) scale(1.04);
-      box-shadow: 0 6px 22px rgba(224, 122, 95, 0.55);
-    }
-
-    #send-btn:active:not(:disabled) {
-      transform: translateY(0) scale(0.97);
-    }
-
-    #send-btn:disabled {
-      opacity: 0.38;
-      cursor: default;
-      box-shadow: none;
-    }
-
-    #send-btn svg {
-      width: 17px;
-      height: 17px;
-      transition: transform var(--transition);
-    }
-
+    #send-btn:hover:not(:disabled) { transform: translateY(-1px) scale(1.04); box-shadow: 0 6px 22px rgba(224, 122, 95, 0.55); }
+    #send-btn:active:not(:disabled) { transform: translateY(0) scale(0.97); }
+    #send-btn:disabled { opacity: 0.38; cursor: default; box-shadow: none; }
+    #send-btn svg { width: 17px; height: 17px; transition: transform var(--transition); }
     #send-btn:hover:not(:disabled) svg { transform: translateX(1px) translateY(-1px); }
 
-    /* ─── Error Toast ─── */
+    /* ─── Error Toast (unchanged) ─── */
     #error-toast {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      margin-top: 10px;
-      padding: 10px 16px;
+      display: none; align-items: center; gap: 8px;
+      margin-top: 10px; padding: 10px 16px;
       background: rgba(220, 80, 80, 0.12);
       border: 1px solid rgba(220, 80, 80, 0.25);
-      border-radius: 10px;
-      font-size: 13px;
-      color: #f08080;
+      border-radius: 10px; font-size: 13px; color: #f08080;
       animation: fadeUp 0.3s ease both;
     }
 
     /* ═══════════════════════════════════════════
-       FOOTER
+       FOOTER  (unchanged)
     ═══════════════════════════════════════════ */
     footer {
       flex-shrink: 0;
-      padding: 0 0 10px;
+      padding: 10px 0 10px;
       text-align: center;
       font-size: 11px;
       color: var(--text-muted);
       letter-spacing: 0.04em;
     }
 
-    footer span { color: var(--accent-gold); opacity: 0.7; }
+    footer .f-brand  { color: var(--accent-gold); opacity: 0.8; }
+    footer .f-author { color: #6ee7b7; font-weight: 600; }   /* mint = positive */
 
     /* ═══════════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════════ */
-    @media (max-width: 600px) {
-      #app { padding: 0 10px; }
 
-      .brand-title  { font-size: 18px; }
+    /* Tablet: hide right panel, narrow left */
+    @media (max-width: 900px) {
+      #panel-right { display: none; }
+      :root { --panel-w: 220px; }
+    }
+
+    /* Mobile: stack everything vertically */
+    @media (max-width: 640px) {
+      html, body { overflow: auto; }
+      #shell { height: auto; overflow-y: auto; overflow-x: hidden; }
+      #body-row {
+        flex-direction: column;
+        overflow: visible;
+        gap: 12px;
+        padding-bottom: 12px;
+      }
+      .side-panel { width: 100%; overflow: visible; flex-shrink: 0; }
+      #chat-col   { min-height: 65vh; overflow: hidden; }
+      .brand-title    { font-size: 18px; }
       .brand-subtitle { display: none; }
-
-      .bubble       { max-width: 82%; font-size: 14px; }
-      #empty-state h2 { font-size: 21px; }
-      .chip         { font-size: 12px; padding: 6px 13px; }
+      .bubble     { max-width: 86%; font-size: 13.5px; }
+      #empty-state h2 { font-size: 20px; }
     }
   </style>
 </head>
 
 <body>
-  <div id="app">
+  <div id="shell">
 
     <!-- ═══ HEADER ═══ -->
     <header>
@@ -549,104 +608,192 @@
       </div>
     </header>
 
-    <!-- ═══ CHAT WINDOW ═══ -->
-    <div id="chat-window" role="log" aria-live="polite" aria-label="Chat conversation">
+    <!-- ═══ THREE-COLUMN BODY ═══ -->
+    <div id="body-row">
 
-      <!-- Empty / welcome state -->
-      <div id="empty-state">
-        <div class="empty-orb">✦</div>
-        <h2>How can I help<br><em>you today?</em></h2>
-        <p>Ask anything about conversations. Specifically first 20 if you also want Persona</p>
+      <!-- ══════════════════════════
+           LEFT — Adaptive Persona Engine
+      ══════════════════════════ -->
+      <aside class="side-panel" id="panel-left">
+        <div class="panel-card">
 
-      </div>
+          <div class="panel-title">
+            <div class="panel-title-icon">◈</div>
+            Adaptive Persona Engine
+          </div>
 
-      <!-- Typing indicator (hidden by default) -->
-      <div id="typing-row" role="status" aria-label="Bot is typing">
-        <div class="avatar bot-avatar">✦</div>
-        <div class="typing-bubble">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
+          <p class="panel-helper">Analyze mood &amp; tone drift across conversation days.</p>
+
+          <div class="panel-field">
+            <label class="panel-label" for="drift-start">Start Day</label>
+            <input class="panel-input" type="number" id="drift-start" min="1" placeholder="e.g. 1" />
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-label" for="drift-end">End Day</label>
+            <input class="panel-input" type="number" id="drift-end" min="1" placeholder="e.g. 3" />
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-label" for="drift-user">User</label>
+            <select class="panel-select" id="drift-user">
+              <option value="user1">user1</option>
+              <option value="user2">user2</option>
+            </select>
+          </div>
+
+          <div class="panel-warning">⚠ Recommended maximum range: 3 days.</div>
+
+          <div class="panel-error" id="drift-error"></div>
+
+          <button class="panel-btn" id="drift-btn" onclick="handleDrift()">
+            Analyze Drift
+          </button>
+
         </div>
-      </div>
+      </aside>
 
-    </div><!-- /#chat-window -->
+      <!-- ══════════════════════════
+           CENTER — Existing Chat UI
+      ══════════════════════════ -->
+      <div id="chat-col">
 
-    <!-- ═══ INPUT AREA ═══ -->
-    <div id="input-area">
-      <div class="input-glass">
-        <textarea
-          id="user-input"
-          rows="1"
-          placeholder="Message ConvoRAG…"
-          aria-label="Type your message"
-          autocomplete="off"
-          spellcheck="true"
-        ></textarea>
-        <button id="send-btn" aria-label="Send message" disabled>
-          <!-- Paper-plane SVG icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
-      </div>
+        <div id="chat-window" role="log" aria-live="polite" aria-label="Chat conversation">
 
-      <!-- Error toast -->
-      <div id="error-toast">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        <span id="error-msg">Could not reach the server. Please try again.</span>
-      </div>
-    </div>
+          <!-- Empty / welcome state -->
+          <div id="empty-state">
+            <div class="empty-orb">✦</div>
+            <h2>How can I help<br><em>you today?</em></h2>
+            <p>Ask anything about conversations. Specifically first 20 if you also want Persona.</p>
+          </div>
+
+          <!-- Typing indicator -->
+          <div id="typing-row" role="status" aria-label="Bot is typing">
+            <div class="avatar bot-avatar">✦</div>
+            <div class="typing-bubble">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+
+        </div><!-- /#chat-window -->
+
+        <!-- Input Area -->
+        <div id="input-area">
+          <div class="input-glass">
+            <textarea
+              id="user-input"
+              rows="1"
+              placeholder="Message ConvoRAG…"
+              aria-label="Type your message"
+              autocomplete="off"
+              spellcheck="true"
+            ></textarea>
+            <button id="send-btn" aria-label="Send message" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <div id="error-toast">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span id="error-msg">Could not reach the server. Please try again.</span>
+          </div>
+        </div>
+
+      </div><!-- /#chat-col -->
+
+      <!-- ══════════════════════════
+           RIGHT — Offline Intent Classifier
+      ══════════════════════════ -->
+      <aside class="side-panel" id="panel-right">
+        <div class="panel-card">
+
+          <div class="panel-title">
+            <div class="panel-title-icon">⬡</div>
+            Offline Intent Classifier
+          </div>
+
+          <p class="panel-helper">Paste only one message, not a full conversation.</p>
+
+          <div class="panel-field">
+            <label class="panel-label" for="intent-input">Message</label>
+            <textarea
+              class="panel-textarea"
+              id="intent-input"
+              placeholder="Example: Remind me to call mom tomorrow"
+            ></textarea>
+          </div>
+
+          <div class="panel-error" id="intent-error"></div>
+
+          <button class="panel-btn" id="intent-btn" onclick="handleIntent()">
+            Classify Intent
+          </button>
+
+        </div>
+      </aside>
+
+    </div><!-- /#body-row -->
 
     <!-- ═══ FOOTER ═══ -->
     <footer>
-      Powered by <span>ConvoRAG</span> · Built by ✦ Atharva
+      Powered by <span class="f-brand">ConvoRAG</span> · Built by <span class="f-author">Atharva</span>
     </footer>
 
-  </div><!-- /#app -->
+  </div><!-- /#shell -->
+
 
   <!-- ═══════════════════════════════════════════
        JAVASCRIPT
   ═══════════════════════════════════════════ -->
   <script>
     /* ─── Config ─── */
-    const API_ENDPOINT = `${window.location.origin}/chat`;
-    const BOT_RESPONSE_DELAY_MS = 400;  // natural feel delay before reply appears
+    const BASE            = window.location.origin;
+    const CHAT_ENDPOINT   = `${BASE}/chat`;
+    const DRIFT_ENDPOINT  = `${BASE}/drift`;
+    const INTENT_ENDPOINT = `${BASE}/intent`;
+    const BOT_DELAY_MS    = 400;
 
     /* ─── DOM refs ─── */
     const chatWindow  = document.getElementById('chat-window');
     const userInput   = document.getElementById('user-input');
     const sendBtn     = document.getElementById('send-btn');
     const typingRow   = document.getElementById('typing-row');
-    const emptyState  = document.getElementById('empty-state');
     const errorToast  = document.getElementById('error-toast');
     const errorMsg    = document.getElementById('error-msg');
 
+    // Drift panel
+    const driftStart = document.getElementById('drift-start');
+    const driftEnd   = document.getElementById('drift-end');
+    const driftUser  = document.getElementById('drift-user');
+    const driftBtn   = document.getElementById('drift-btn');
+    const driftError = document.getElementById('drift-error');
+
+    // Intent panel
+    const intentInput = document.getElementById('intent-input');
+    const intentBtn   = document.getElementById('intent-btn');
+    const intentError = document.getElementById('intent-error');
+
     /* ─── State ─── */
-    let isBusy = false;  // prevents multiple simultaneous requests
+    let isBusy = false;
 
-    /* ──────────────────────────────────────────
-       AUTO-RESIZE TEXTAREA
-    ────────────────────────────────────────── */
+    /* ══════════════════════════════════════════
+       CHAT — auto-resize textarea
+    ══════════════════════════════════════════ */
     userInput.addEventListener('input', () => {
-      // Enable/disable send button based on content
-      const hasText = userInput.value.trim().length > 0;
-      sendBtn.disabled = !hasText || isBusy;
-
-      // Auto-resize up to 140px (CSS max-height)
+      sendBtn.disabled = userInput.value.trim().length === 0 || isBusy;
       userInput.style.height = 'auto';
       userInput.style.height = userInput.scrollHeight + 'px';
     });
 
-    /* ──────────────────────────────────────────
-       KEYBOARD: Enter to send (Shift+Enter = newline)
-    ────────────────────────────────────────── */
     userInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -656,131 +803,215 @@
 
     sendBtn.addEventListener('click', handleSend);
 
-    /* ──────────────────────────────────────────
-       SUGGESTION CHIPS
-    ────────────────────────────────────────── */
-    function useChip(chipEl) {
-      userInput.value = chipEl.textContent.trim();
-      // Trigger input event to resize + enable send
-      userInput.dispatchEvent(new Event('input'));
-      userInput.focus();
-    }
-
-    /* ──────────────────────────────────────────
-       MAIN SEND HANDLER
-    ────────────────────────────────────────── */
+    /* ══════════════════════════════════════════
+       CHAT SEND HANDLER
+    ══════════════════════════════════════════ */
     async function handleSend() {
       const text = userInput.value.trim();
       if (!text || isBusy) return;
 
-      // ── Lock UI ──
       isBusy = true;
       sendBtn.disabled = true;
       hideError();
+      dismissEmptyState();
 
-      // ── Hide empty state on first message ──
-      if (emptyState) emptyState.remove();
-
-      // ── Render user bubble ──
       appendMessage('user', text);
-
-      // ── Clear input ──
       userInput.value = '';
       userInput.style.height = 'auto';
-
-      // ── Show typing indicator ──
       showTyping();
 
-      // ── Call API ──
       try {
-        const botReply = await fetchReply(text);
-
-        // Small delay for natural feel
-        await sleep(BOT_RESPONSE_DELAY_MS);
-
+        const reply = await fetchChat(text);
+        await sleep(BOT_DELAY_MS);
         hideTyping();
-        appendMessage('bot', botReply);
-
+        appendMessage('bot', reply);
       } catch (err) {
         hideTyping();
         showError(err.message || 'Could not reach the server. Is it running?');
-        // Append an error bubble in chat too
         appendMessage('bot', '⚠️ Sorry, I could not connect to the server. Please make sure it is running and try again.');
       }
 
-      // ── Unlock UI ──
       isBusy = false;
       userInput.focus();
     }
 
-    /* ──────────────────────────────────────────
-       FETCH FROM FASTAPI BACKEND
-    ────────────────────────────────────────── */
-    async function fetchReply(query) {
-      const res = await fetch(API_ENDPOINT, {
+    /* ══════════════════════════════════════════
+       DRIFT HANDLER
+    ══════════════════════════════════════════ */
+    async function handleDrift() {
+      hidePanelError(driftError);
+
+      const startDay     = parseInt(driftStart.value, 10);
+      const endDay       = parseInt(driftEnd.value, 10);
+      const selectedUser = driftUser.value;
+
+      // Validate
+      if (isNaN(startDay) || isNaN(endDay)) {
+        return showPanelError(driftError, 'Please enter both Start Day and End Day.');
+      }
+      if (endDay < startDay) {
+        return showPanelError(driftError, 'End Day must be ≥ Start Day.');
+      }
+      if ((endDay - startDay) > 3) {
+        return showPanelError(driftError, 'Range exceeds 3 days. Please narrow the selection.');
+      }
+
+      driftBtn.disabled = true;
+      dismissEmptyState();
+      showTyping();
+
+      try {
+        const data = await fetchDrift(startDay, endDay, selectedUser);
+        await sleep(BOT_DELAY_MS);
+        hideTyping();
+        appendMessage('bot', formatDriftResult(data, startDay, endDay, selectedUser));
+      } catch (err) {
+        hideTyping();
+        showPanelError(driftError, err.message || 'Failed to reach /drift endpoint.');
+      }
+
+      driftBtn.disabled = false;
+    }
+
+    /* ══════════════════════════════════════════
+       INTENT HANDLER
+    ══════════════════════════════════════════ */
+    async function handleIntent() {
+      hidePanelError(intentError);
+
+      const text = intentInput.value.trim();
+      if (!text) {
+        return showPanelError(intentError, 'Please enter a message to classify.');
+      }
+
+      intentBtn.disabled = true;
+      dismissEmptyState();
+      showTyping();
+
+      try {
+        const data = await fetchIntent(text);
+        await sleep(BOT_DELAY_MS);
+        hideTyping();
+        appendMessage('bot', formatIntentResult(data));
+      } catch (err) {
+        hideTyping();
+        showPanelError(intentError, err.message || 'Failed to reach /intent endpoint.');
+      }
+
+      intentBtn.disabled = false;
+    }
+
+    /* ══════════════════════════════════════════
+       API HELPERS
+    ══════════════════════════════════════════ */
+    async function fetchChat(query) {
+      const res = await fetch(CHAT_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),
       });
-
-      if (!res.ok) {
-        throw new Error(`Server responded with status ${res.status}`);
-      }
-
+      if (!res.ok) throw new Error(`Server responded with status ${res.status}`);
       const data = await res.json();
-
-      // Validate expected shape { "response": "..." }
-      if (typeof data.response !== 'string') {
-        throw new Error('Unexpected response format from server.');
-      }
-
+      if (typeof data.response !== 'string') throw new Error('Unexpected response format from /chat.');
       return data.response;
     }
 
-    /* ──────────────────────────────────────────
-       APPEND MESSAGE BUBBLE
-    ────────────────────────────────────────── */
+    async function fetchDrift(start_day, end_day, selected_user) {
+      const res = await fetch(DRIFT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ start_day, end_day, selected_user }),
+      });
+      if (!res.ok) throw new Error(`Server responded with status ${res.status}`);
+      return res.json();
+    }
+
+    async function fetchIntent(text) {
+      const res = await fetch(INTENT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text }),
+      });
+      if (!res.ok) throw new Error(`Server responded with status ${res.status}`);
+      return res.json();
+    }
+
+    /* ══════════════════════════════════════════
+       RESPONSE FORMATTERS
+       (output rendered via textContent → XSS-safe)
+    ══════════════════════════════════════════ */
+    function formatDriftResult(data, startDay, endDay, user) {
+      const lines = [
+        `📊 Adaptive Persona Analysis`,
+        `User: ${user}  ·  Days ${startDay}–${endDay}`,
+        `─────────────────────────────`,
+      ];
+      if (Array.isArray(data.timeline) && data.timeline.length > 0) {
+        data.timeline.forEach(entry => {
+          lines.push(`Day ${entry.day}`);
+          lines.push(`  Tone:    ${entry.tone}`);
+          lines.push(`  Trigger: ${entry.trigger}`);
+          lines.push('');
+        });
+      } else {
+        lines.push('No timeline data returned.');
+      }
+      return lines.join('\n').trimEnd();
+    }
+
+    function formatIntentResult(data) {
+      const confidence = typeof data.confidence === 'number'
+        ? (data.confidence * 100).toFixed(2) + '%'
+        : String(data.confidence);
+      return [
+        `🔍 Intent Classification Result`,
+        `─────────────────────────────`,
+        `Intent:     ${capitalize(data.intent)}`,
+        `Confidence: ${confidence}`,
+      ].join('\n');
+    }
+
+    function capitalize(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    /* ══════════════════════════════════════════
+       APPEND MESSAGE — shared by all three features
+    ══════════════════════════════════════════ */
     function appendMessage(role, text) {
       const isUser = role === 'user';
 
-      /* Row */
       const row = document.createElement('div');
       row.className = `message-row ${isUser ? 'user' : 'bot'}`;
 
-      /* Avatar */
       const avatar = document.createElement('div');
       avatar.className = `avatar ${isUser ? 'user-avatar' : 'bot-avatar'}`;
       avatar.textContent = isUser ? '◉' : '✦';
 
-      /* Bubble wrapper */
       const wrap = document.createElement('div');
       wrap.className = 'bubble-wrap';
 
-      /* Bubble */
       const bubble = document.createElement('div');
       bubble.className = 'bubble';
-      bubble.textContent = text;   // safe: no innerHTML, avoids XSS
+      bubble.textContent = text;   // textContent = XSS-safe
 
-      /* Timestamp */
       const ts = document.createElement('div');
       ts.className = 'timestamp';
       ts.textContent = now();
 
       wrap.appendChild(bubble);
       wrap.appendChild(ts);
-
       row.appendChild(avatar);
       row.appendChild(wrap);
 
-      // Insert before typing indicator
       chatWindow.insertBefore(row, typingRow);
-
       scrollToBottom();
     }
 
-    /* ──────────────────────────────────────────
+    /* ══════════════════════════════════════════
        TYPING INDICATOR
-    ────────────────────────────────────────── */
+    ══════════════════════════════════════════ */
     function showTyping() {
       typingRow.style.display = 'flex';
       scrollToBottom();
@@ -790,9 +1021,9 @@
       typingRow.style.display = 'none';
     }
 
-    /* ──────────────────────────────────────────
-       ERROR TOAST
-    ────────────────────────────────────────── */
+    /* ══════════════════════════════════════════
+       ERROR HELPERS
+    ══════════════════════════════════════════ */
     function showError(msg) {
       errorMsg.textContent = msg;
       errorToast.style.display = 'flex';
@@ -802,22 +1033,35 @@
       errorToast.style.display = 'none';
     }
 
-    /* ──────────────────────────────────────────
+    function showPanelError(el, msg) {
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function hidePanelError(el) {
+      el.style.display = 'none';
+      el.textContent = '';
+    }
+
+    /* ══════════════════════════════════════════
        UTILITIES
-    ────────────────────────────────────────── */
+    ══════════════════════════════════════════ */
+    function dismissEmptyState() {
+      const es = document.getElementById('empty-state');
+      if (es) es.remove();
+    }
+
     function scrollToBottom() {
       chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
     }
 
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
     function now() {
       return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
-    /* ── Focus input on load ── */
+    /* Focus input on load */
     userInput.focus();
   </script>
 </body>

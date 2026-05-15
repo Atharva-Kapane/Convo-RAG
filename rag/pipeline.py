@@ -4,6 +4,7 @@ import os
 from rag.retriever import Retriever
 from rag.router import is_persona_query
 from rag.prompt_builder import build_prompt
+from rag.conflict_resolver import ConflictResolver
 
 from models.gemini import gemini  # use singleton
 
@@ -15,6 +16,7 @@ PERSONA_PATH = os.path.join(BASE_DIR, "processed_data", "personas.json")
 class RAGPipeline:
     def __init__(self):
         self.retriever = Retriever()
+        self.conflict_resolver = ConflictResolver()
 
         # load personas once
         with open(PERSONA_PATH, "r") as f:
@@ -48,6 +50,15 @@ class RAGPipeline:
         chunks = [c for c in chunks if c["text"].strip()]
         topics = [t for t in topics if t["summary"].strip()]
 
+        # --------------------------------
+        # conflict resolution
+        # --------------------------------
+        ranked_chunks = self.conflict_resolver.rerank_chunks(chunks)
+
+        contradictions = self.conflict_resolver.detect_contradictions(
+        ranked_chunks
+        )
+
         # -------------------------
         # PERSONA ROUTING
         # -------------------------
@@ -62,9 +73,10 @@ class RAGPipeline:
         # -------------------------
         prompt = build_prompt(
             query=query,
-            chunks=chunks,
+            chunks=ranked_chunks,
             topics=topics,
-            personas=personas
+            personas=personas,
+            contradictions=contradictions
         )
 
         # -------------------------
