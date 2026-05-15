@@ -2,31 +2,280 @@
 
 Convo-RAG is a small research-ready conversation retrieval-augmented generation (RAG) system. It indexes conversation segments and topic summaries, retrieves relevant context for a user query, optionally attaches a persona extracted from a conversation, and queries an LLM to produce a grounded reply.
 
-## Demo Media
-
-### Screenshots
-
-#### Index Page
-
-![Index Page](assets/Index_Page.png)
-
-#### Conversation Example
-
-![Conversation Example](assets/Conversation_Example.png)
-
-#### Inference
-
-![Inference](assets/Inference.png)
-
-#### Output
-
-![Output](assets/Output.png)
+## Demo Media & Features Overview
 
 ### Video Walkthrough
 
 - [Watch Demo Video](assets/Demo.mp4)
 
-This README describes how to set up and run the project, what each component does, and how the core algorithms work (topic change detection, retrieval, persona extraction).
+### Feature Screenshots
+
+#### Unified Multi-Feature Interface
+
+![Unified UI](assets/UI.png)
+
+#### RAG Chatbot
+
+![Normal Chat](assets/Normal_Chat.png)
+
+#### Adaptive Persona Engine
+
+![Adaptive Persona Engine](assets/Adaptive_Persona_Engine.png)
+
+#### Offline Intent Classifier
+
+![Intent Classifier](assets/Intent_Classifier.png)
+
+---
+
+## New Feature Additions
+
+### 1. Adaptive Persona Engine
+
+The project now includes an advanced **Adaptive Persona Engine** that analyzes how a user's conversational behavior evolves over time instead of generating only a single static personality profile.
+
+#### Core Objective
+
+The goal of this module is to detect:
+
+- **Behavioral drift** — changes in interaction patterns
+- **Emotional changes** — shifts in emotional expression
+- **Tone evolution** — transformation in conversational tone
+- **Style transitions** — changes in communication approach
+
+across different days of interaction.
+
+Instead of treating the user as having one fixed personality, the system tracks how their communication dynamically changes throughout the conversation timeline.
+
+#### Persona Drift Detection
+
+The engine performs:
+
+- **Day-wise behavioral analysis** — examines behavior patterns for each day
+- **Tone classification** — identifies emotional and communicative tone
+- **Conversational evolution tracking** — measures change across time
+
+The system compares conversations across selected day ranges and identifies shifts in:
+
+- Emotional state
+- Interaction style
+- Communication tone
+- Engagement patterns
+
+**Example temporal personality timeline:**
+
+```
+Day 1 → Curious & Formal
+Day 4 → Casual & Frustrated
+Day 7 → Playful & Relaxed
+```
+
+This creates a temporal personality timeline rather than a static summary.
+
+#### Trigger Detection
+
+The system also identifies likely triggers responsible for behavioral changes.
+
+Detected triggers may include:
+
+- **Topics** — specific conversation subjects
+- **Events** — significant occurrences
+- **People** — individuals involved in conversations
+- **Recurring discussion themes** — patterns across multiple conversations
+- **Stressful conversations** — emotionally charged interactions
+- **Project-related discussions** — work/study-related topics
+
+**Example trigger identification:**
+
+```
+"Project deadlines"
+"Work discussion"
+"Academic stress"
+"Social interaction"
+```
+
+This makes the persona engine context-aware rather than only sentiment-based.
+
+#### Selective User Analysis
+
+The drift engine supports:
+
+- **User1 analysis** — track primary participant behavior
+- **User2 analysis** — track secondary participant behavior
+
+allowing independent behavioral tracking for multiple participants inside the dataset.
+
+#### Controlled Timeline Analysis
+
+To maintain:
+
+- **Focused analysis** — concentrate on relevant time windows
+- **Better interpretability** — easier to understand behavioral changes
+- **Low latency** — faster analysis and results
+
+the frontend restricts day-range analysis to small windows (recommended maximum range: **3 days**).
+
+This prevents:
+
+- Noisy drift aggregation
+- Overly generalized outputs
+- Inconsistent behavioral summaries
+
+#### Real-Time Frontend Integration
+
+The Adaptive Persona Engine is fully integrated into the live frontend UI.
+
+**Features:**
+
+- Start day input selector
+- End day input selector
+- User selector dropdown
+- Real-time drift analysis and results
+
+Results are rendered directly inside the main chatbot conversation window to maintain a unified interaction experience.
+
+---
+
+### 2. Offline Intent Classifier
+
+The system now includes a fully **offline lightweight NLP intent classification module**.
+
+Unlike API-dependent approaches, this classifier:
+
+- Runs entirely on CPU
+- Requires no external AI API
+- Performs inference locally
+- Works in real time
+
+This significantly improves:
+
+- **Speed** — no network latency
+- **Privacy** — all computation stays local
+- **Deployment efficiency** — minimal external dependencies
+- **Offline capability** — works without internet connection
+
+#### Supported Intent Categories
+
+The classifier predicts the following intent classes:
+
+| Intent | Description |
+|--------|-------------|
+| `reminder` | Reminder-related requests |
+| `emotional-support` | Emotionally expressive or support-seeking messages |
+| `action-item` | Task/action-oriented instructions |
+| `small-talk` | Casual conversational interaction |
+| `unknown` | Undefined/noisy/random input |
+
+#### Model Architecture
+
+The intent classification pipeline uses a **lightweight traditional ML architecture** optimized for fast CPU inference.
+
+**Pipeline components:**
+
+- **TF-IDF Vectorizer** — converts text to numerical features
+- **LinearSVC** — support vector classifier for intent prediction
+- **CalibratedClassifierCV** — provides confidence scoring
+
+This design was intentionally selected because it:
+
+- Stays under lightweight deployment limits
+- Performs extremely fast inference
+- Works well on CPU-only environments
+- Avoids GPU dependency
+- Supports confidence scoring
+
+#### Text Vectorization
+
+The system uses:
+
+- **Unigram + bigram TF-IDF features** — captures both single words and word pairs
+- **Stop-word filtering** — removes common non-semantic words
+- **Capped feature dimensions** — reduces memory footprint
+
+This enables efficient semantic representation without requiring transformer-scale models.
+
+#### Confidence-Based Predictions
+
+The classifier provides:
+
+- **Predicted intent** — the detected intent category
+- **Confidence score** — probability of the prediction
+
+**Example response:**
+
+```json
+{
+  "intent": "reminder",
+  "confidence": 0.98
+}
+```
+
+Confidence estimation is enabled through **CalibratedClassifierCV**, which wraps the SVM classifier to generate probability-like outputs.
+
+#### Fully Offline Inference
+
+A major design goal was **complete offline execution**.
+
+The intent module:
+
+- Does not use OpenAI APIs
+- Does not use Gemini APIs
+- Does not require internet connection
+- Does not depend on cloud AI services
+
+This improves:
+
+- **Privacy** — no data leaves the local machine
+- **Latency** — instant local processing
+- **Portability** — works in any environment
+- **Deployment simplicity** — no API key management
+
+#### Lightweight Deployment Optimization
+
+The deployment architecture was optimized specifically for low-resource hosting environments such as Render free-tier instances.
+
+**Optimizations include:**
+
+- Lightweight ML pipeline (traditional ML, not deep learning)
+- CPU-only inference (no GPU required)
+- Reduced memory footprint
+- Fast model loading
+- Minimal dependency overhead
+
+This allows the system to remain responsive even under strict RAM constraints.
+
+#### Real-Time Frontend Integration
+
+The intent classifier is fully integrated into the unified frontend interface.
+
+**Users can:**
+
+- Input a single message
+- Classify intent instantly
+- Receive real-time results with confidence scores
+
+The response is displayed directly inside the chatbot conversation stream for a seamless user experience.
+
+#### Unified Multi-Feature Interface
+
+The frontend architecture was upgraded into a **unified AI workspace** containing:
+
+- **RAG chatbot** — intelligent retrieval-augmented generation
+- **Adaptive Persona Engine** — behavioral drift analysis
+- **Offline Intent Classifier** — real-time intent detection
+
+All features operate inside a single responsive webpage while preserving:
+
+- Consistent UI design
+- Glassmorphism styling
+- Responsive layout
+- Conversational interaction flow
+
+This creates a more production-oriented user experience rather than separate disconnected tools.
+
+---
+
+This README describes how to set up and run the project, what each component does, and how the core algorithms work (topic change detection, retrieval, persona extraction, intent classification, and behavioral drift detection).
 
 **Quick Start**
 
